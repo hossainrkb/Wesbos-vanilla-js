@@ -1,0 +1,23 @@
+{
+  "name": "wesbos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "no",
+  "scripts": {
+    "start": "node speech_recog_20.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hossainrkb/vanilla-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hossainrkb/vanilla-js/issues"
+  },
+  "homepage": "https://github.com/hossainrkb/vanilla-js#readme",
+  "dependencies": {
+    "g": "^2.0.1",
+    "http-server": "^0.12.0"
+  }
+}
