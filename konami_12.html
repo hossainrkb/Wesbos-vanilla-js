@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+    const arr = [];
+    const secretKey = "jscript";
+    window.addEventListener("keyup", (e)=>{
+        //console.log(e.key);
+        arr.push(...e.key)
+        //console.log(arr);
+        //secret kay length needed others just deleted
+        arr.splice(-secretKey.length-1,arr.length-secretKey.length)
+        
+        if(arr.join('').includes(secretKey)){
+            console.log("FOUND IT, match");
+        }
+        console.log(arr);
+
+    })
+    const array = ["a","b","c","d","a"];
+    const reduce = array.reduce((acc , item)=>{
+        //console.log(acc);
+        if(!acc[item]){
+            acc[item] = 0;
+        }
+        acc[item]++;
+        //console.log(acc);
+        return acc;
+    },{})
+    console.log(reduce);
+</script>
+</body>
+</html>

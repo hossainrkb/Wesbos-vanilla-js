@@ -108,11 +108,15 @@ span.population {
         //console.log(this.value);
         const callFindMatch = findMatches(this.value , cities)
 
-        
+        const replace_regex = new RegExp(this.value,"gi");
+
         //console.log(callFindMatch)
         const getitem = callFindMatch.map(each=>{
+          const cityName = each.city.replace(replace_regex,`<span class="hl">${this.value}</span>`)
+          const stateName = each.state.replace(replace_regex,`<span class="hl">${this.value}</span>`)
             return` <li>
-        <span class="name">${each.city}, ${each.state}</span>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="name">${each.population.replace(/\d(?=(\d{3})+(?!\d))/g, ',')}</span>
                 </li>`;
         }).join("");
         suggestions.innerHTML = getitem;

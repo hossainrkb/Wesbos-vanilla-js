@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Countdown Timer</title>
+  <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <style>
+  html {
+  box-sizing: border-box;
+  font-size: 10px;
+  background: #8E24AA;
+  background: linear-gradient(45deg,  #42a5f5 0%,#478ed1 50%,#0d47a1 100%);
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  text-align: center;
+  font-family: 'Inconsolata', monospace;
+}
+
+.display__time-left {
+  font-weight: 100;
+  font-size: 20rem;
+  margin: 0;
+  color: white;
+  text-shadow: 4px 4px 0 rgba(0,0,0,0.05);
+}
+
+.timer {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.timer__controls {
+  display: flex;
+}
+
+.timer__controls > * {
+  flex: 1;
+}
+
+.timer__controls form {
+  flex: 1;
+  display: flex;
+}
+
+.timer__controls input {
+  flex: 1;
+  border: 0;
+  padding: 2rem;
+}
+
+.timer__button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: white;
+  font-size: 2rem;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.1);
+  border-bottom: 3px solid rgba(0,0,0,0.2);
+  border-right: 1px solid rgba(0,0,0,0.2);
+  padding: 1rem;
+  font-family: 'Inconsolata', monospace;
+}
+
+.timer__button:hover,
+.timer__button:focus {
+  background: rgba(0,0,0,0.2);
+  outline: 0;
+}
+
+.display {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.display__end-time {
+  font-size: 4rem;
+  color: white;
+}
+  </style>
+</head>
+<body>
+  <div class="timer">
+    <div class="timer__controls">
+      <button data-time="20" class="timer__button">20 Secs</button>
+      <button data-time="300" class="timer__button">Work 5</button>
+      <button data-time="900" class="timer__button">Quick 15</button>
+      <button data-time="1200" class="timer__button">Snack 20</button>
+      <button data-time="3600" class="timer__button">Lunch Break</button>
+      <form name="customForm" id="custom">
+        <input type="text" name="minutes" placeholder="Enter Minutes">
+      </form>
+    </div>
+    <div class="display">
+      <h1 class="display__time-left"></h1>
+      <p class="display__end-time"></p>
+    </div>
+  </div>
+
+  <script>
+      const timeLeft = document.querySelector(".display__time-left");
+      const thenTimeShows = document.querySelector(".display__end-time");
+      const buttons =document.querySelectorAll("[data-time]");
+      const formdata =document.querySelector("#custom");
+    let countDown;
+function timer(seconds){
+    clearInterval(countDown);  
+    displayTImeLeft(seconds);
+   
+   const now = Date.now();
+   //console.log(time);
+   const then = now + seconds*1000;
+   whenYouGetBack(then);
+  // console.log({now,then});
+ countDown =   setInterval(()=>{
+    secondsLeft = Math.round((then -Date.now())/1000);
+    displayTImeLeft(secondsLeft);
+   if(secondsLeft <= 0){
+    clearInterval(countDown);   
+    return;
+   }
+  },1000)
+}
+
+function displayTImeLeft (second){
+    //console.log(second);
+    const minute = Math.floor(second / 60);
+    const remainSeconds = second % 60; 
+    //console.log({minute,remainSeconds})
+    const display = `${minute}:${remainSeconds < 10 ? '0':'' }${remainSeconds}`
+    timeLeft.textContent = display;
+}
+
+function whenYouGetBack(times){
+    const thenTime = new Date(times);
+    let hours = thenTime.getHours();
+    let minutes = thenTime.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    if(hours >= 12){
+       // if(hours % 12 ===0)
+        hours = hours % 12 === 0 ? '12': hours % 12 
+        //hours = hours % 12
+    }
+    
+    const displaythen = `${hours}:${minutes < 10 ? '0':'' }${minutes} ${ampm}`
+    console.log(displaythen);
+    thenTimeShows.textContent = displaythen;
+
+}
+function setTimeHere(){
+   // console.log("get in")
+   //console.log(this.dataset.time)
+   timer (this.dataset.time)
+}
+function getVariableTime(e){
+    e.preventDefault();
+   // console.log(this.minutes.value);
+   const getMin = this.minutes.value; 
+   const getSec = getMin*60;
+   timer(getSec);
+}
+buttons.forEach((eachButton) =>{
+    eachButton.addEventListener("click", setTimeHere);
+})
+formdata.addEventListener("submit", getVariableTime);
+
+</script>
+</body>
+</html>
+
+
